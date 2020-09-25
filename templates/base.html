@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ title }} - League Organiser</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    </head>
+    <body>
+        <header>
+            <h1>League Organiser</h1>
+            <nav>
+                <ls>
+                    <a href="/"><button>Homepage</button></a>
+                </ls>
+            </nav>
+        </header>
+        <main>
+            {% block content %}
+                
+            {% endblock %}
+            <aside>
+                <ul>
+                    <li>
+                        <a href="/leagues"><button>View Leagues</button></a>
+                    </li>
+                    <li>
+                        <a href="/teams"><button>View All Teams</button></a>
+                    </li>
+                    <li>
+                        <a href="/players"><button>View All Players</button></a>
+                    </li>
+                </ul>
+            </aside>
+        </main>
+        <footer>
+            &#169; MikeyGames Ltd.
+        </footer>
+    </body>
+</html>

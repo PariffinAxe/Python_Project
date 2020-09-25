@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <main>
+        This will show a table. In the side bar will be some further links. Within the table the teams will be clickable links. below the table will be a link to fixtures/results
+        <table>
+            <tr>
+                <th>Team</th>
+                <th>MP</th>
+                <th>W</th>
+                <th>D</th>
+                <th>L</th>
+                <th>GF</th>
+                <th>GA</th>
+                <th>GD</th>
+                <th>Pts</th>
+            </tr>
+            <tr>
+                <th><a href="/teams/team.id">Glasgow Kayak Club</a></th>
+            </tr>
+        </table>
+        <a href="/leagues/league.id/fixtures"><button>Fixtures</button></a>
+        <a href="/leagues/league.id/results"><button>Results</button></a>
+
+    </main>    
+
+
+{% endblock %}
