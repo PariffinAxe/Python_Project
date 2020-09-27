@@ -80,6 +80,8 @@ CREATE TABLE games (
     league_id INT REFERENCES leagues(id),
     round_no INT,
     game_no INT,
+    team_1_score INT,
+    team_2_score INT,
     started BOOLEAN,
     finished BOOLEAN
 );

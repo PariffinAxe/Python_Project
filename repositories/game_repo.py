@@ -7,8 +7,8 @@ import repositories.league_repo as league_repo
 
 # save an instance
 def save(game):
-    sql = "INSERT INTO games(team_1_id, team_2_id, league_id, round_no, game_no, started, finished) VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING id"
-    values = [game.team_1.id, game.team_2.id, game.league.id, game.round_no, game.game_no, game.started, game.finished]
+    sql = "INSERT INTO games(team_1_id, team_2_id, league_id, round_no, game_no, team_1_score, team_2_score, started, finished) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id"
+    values = [game.team_1.id, game.team_2.id, game.league.id, game.round_no, game.game_no, game.team_1_score, game.team_2_score, game.started, game.finished]
     results = run_sql(sql, values)
     game.id = results[0]['id']
     return game
@@ -25,7 +25,7 @@ def select_all():
         team_1 = team_repo.select(result['team_1_id'])
         team_2 = team_repo.select(result['team_2_id'])
         league = league_repo.select(result['league_id'])
-        game = Game(team_1, team_2, league, result['round_no'], result['game_no'], result['started'], result['finished'], result['id'])
+        game = Game(team_1, team_2, league, result['round_no'], result['game_no'], result['team_1_score'], result['team_2_score'], result['started'], result['finished'], result['id'])
         games.append(game)
     return games
 
@@ -41,7 +41,7 @@ def select(id):
         team_1 = team_repo.select(result['team_1_id'])
         team_2 = team_repo.select(result['team_2_id'])
         league = league_repo.select(result['league_id'])
-        game = Game(team_1, team_2, league, result['round_no'], result['game_no'], result['started'], result['finished'], result['id'])
+        game = Game(team_1, team_2, league, result['round_no'], result['game_no'], result['team_1_score'], result['team_2_score'], result['started'], result['finished'], result['id'])
     return game
 
 
@@ -61,8 +61,8 @@ def delete(id):
 # generate fixture list for specific league
 def generate_fixture_list(league):
     fixtures = []
-    sql = "SELECT possible_games.team_1, possible_games.team_2, playlists.round_no FROM possible_games INNER JOIN fixtures ON fixtures.possible_game_id = possible_games.id INNER JOIN playlists ON fixtures.playlist_id = playlists.id INNER JOIN league_types ON league_types.id = playlists.league_type_id INNER JOIN leagues ON league_types.id = leagues.league_type_id WHERE leagues.name = %s"
-    values = [league.name]
+    sql = "SELECT possible_games.team_1, possible_games.team_2, playlists.round_no FROM possible_games INNER JOIN fixtures ON fixtures.possible_game_id = possible_games.id INNER JOIN playlists ON fixtures.playlist_id = playlists.id INNER JOIN league_types ON league_types.id = playlists.league_type_id INNER JOIN leagues ON league_types.id = leagues.league_type_id WHERE leagues.id = %s"
+    values = [league.id]
     results = run_sql(sql, values)
 
     game_no = 1
@@ -73,8 +73,8 @@ def generate_fixture_list(league):
 
 
     teams = []
-    sql = "SELECT teams.* FROM teams INNER JOIN leagues ON leagues.id = teams.league_id WHERE leagues.name = %s"
-    values = [league.name]
+    sql = "SELECT teams.* FROM teams INNER JOIN leagues ON leagues.id = teams.league_id WHERE leagues.id = %s"
+    values = [league.id]
     results = run_sql(sql, values)
     for result in results:
         team = Team(league, result['name'], result['games_played'], result['wins'], result['draws'], result['losses'], result['goals_for'], result['goals_against'], result['goal_difference'], result['points'], result['id'])
@@ -89,4 +89,23 @@ def generate_fixture_list(league):
 
     return games
 
-    
+
+#update when scoring a goal
+def goal_scored(game):
+    sql = "UPDATE games SET (team_1_score, team_2_score) = (%s, %s) WHERE id = %s"
+    values = [game.team_1_score, game.team_2_score, game.id]
+    run_sql(sql, values)
+
+
+# Start a game
+def start_game(game):
+    sql = "UPDATE games SET (started) = (%s) WHERE id = %s"
+    values = [game.started, game.id]
+    run_sql(sql, values)
+
+
+# Finish a game
+def end_game(game):
+    sql = "UPDATE games SET (finished) = (%s) WHERE id = %s"
+    values = [game.finished, game.id]
+    run_sql(sql, values)

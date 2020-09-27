@@ -56,6 +56,7 @@ def delete(id):
     values = [id]
     run_sql(sql, values)
 
+
 # get all teams within league
 def teams(league):
     teams = []
@@ -69,6 +70,7 @@ def teams(league):
         teams.append(team)
     return teams
 
+
 # get all remaining/live fixtures within a league
 def games(league):
     games = []
@@ -80,12 +82,56 @@ def games(league):
     for result in results:
         team_1 = team_repo.select(result['team_1_id'])
         team_2 = team_repo.select(result['team_2_id'])
-        game = Game(team_1, team_2, league, result['round_no'], result['game_no'], result['started'], result['finished'], result['id'])
+        game = Game(team_1, team_2, league, result['round_no'], result['game_no'], result['team_1_score'], result['team_2_score'], result['started'], result['finished'], result['id'])
         games.append(game)
 
     return games
 
-# def get_current_round(league):
-#     sql = "SELECT * FROM games WHERE league_id = %s AND games.started = FALSE ORDER BY games.game_no ASC"
+
+# get all games that have already been played
+def results(league):
+    games = []
+
+    sql = "SELECT * FROM games WHERE league_id = %s AND games.finished = TRUE ORDER BY games.game_no ASC"
+    values = [league.id]
+    results = run_sql(sql, values)
+
+    for result in results:
+        team_1 = team_repo.select(result['team_1_id'])
+        team_2 = team_repo.select(result['team_2_id'])
+        game = Game(team_1, team_2, league, result['round_no'], result['game_no'], result['team_1_score'], result['team_2_score'], result['started'], result['finished'], result['id'])
+        games.append(game)
+
+    return games
+
+
+#get the round currently in play/next up
+def get_current_round(league):
+    round_no = None
+    sql = "SELECT * FROM games WHERE league_id = %s AND games.finished = FALSE ORDER BY games.game_no ASC"
+    values = [league.id]
+    results = run_sql(sql, values)
+    for result in results:
+        round_no = result['round_no']
+        break
+    print(f"this is the round number - {round_no}")
+    return round_no
+
+
+# get a list of all games in the currebt round
+def current_games(league, round_no):
+    games = []
+
+    sql = "SELECT * FROM games WHERE league_id = %s AND round_no = %s ORDER BY games.game_no ASC" 
+    values = [league.id, round_no]
+    results = run_sql(sql, values)
+
+    for result in results:
+        team_1 = team_repo.select(result['team_1_id'])
+        team_2 = team_repo.select(result['team_2_id'])
+        game = Game(team_1, team_2, league, result['round_no'], result['game_no'], result['team_1_score'], result['team_2_score'], result['started'], result['finished'], result['id'])
+        games.append(game)
+    
+    return games
 
 

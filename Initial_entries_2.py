@@ -1,6 +1,3 @@
-import pdb
-
-#This page acts solely as a way to test ability to get and retreive date from databases
 from models.fixture import Fixture
 import repositories.fixture_repo as fixture_repo
 from models.game import Game
@@ -28,13 +25,17 @@ import repositories.yellow_repo as yellow_repo
 
 
 
+league = league_repo.select(3)
+games = game_repo.generate_fixture_list(league)
+for game in games:
+    game_repo.save(game)
 
+league = league_repo.select(1)
+games = game_repo.generate_fixture_list(league)
+for game in games:
+    game_repo.save(game)
 
-
-
-
-
-
-
-
-pdb.set_trace()
+league = league_repo.select(2)
+games = game_repo.generate_fixture_list(league)
+for game in games:
+    game_repo.save(game)

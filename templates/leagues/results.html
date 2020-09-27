@@ -2,7 +2,7 @@
 
 {% block content %}
     <main>
-        <h2>Current Round - Round {{ round_no }}</h2>
+        <h2>Results</h2>
         <table class="fixtures">
             <tr class="fixture_headers">
                 <th>Game Number</th>
@@ -16,32 +16,15 @@
             <tr>
                 <th>{{ game.game_no }}</th>
                 <th><a href="/teams/{{ game.team_1.id }}">{{ game.team_1.name }}</a></th>
-                <th>
-                    {% if game.started %}
-                    {{ game.team_1_score }}
-                    {% endif %}
-                </th>
+                <th>{{ game.team_1_score }}</th>
                 <th>vs</th>
-                <th>
-                    {% if game.started %}
-                    {{ game.team_2_score }}
-                    {% endif %}
-                </th>
+                <th>{{ game.team_2_score }}</th>
                 <th><a href="/teams/{{ game.team_1.id }}">{{ game.team_2.name }}</a></th>
-                <th>
-                    {% if game.started %}
-                        {% if game.finished %}
-                            Result
-                        {% else %}
-                            Live
-                        {% endif %}
-                    {% endif %}
-                </th>
             </tr>
             {% endfor %}
         </table>
         {% if games == [] %}
-            There are no more fixtures to be played
+            There are no results yet!
         {% endif %}
 
         <h2><a href="/leagues/{{ league.id }}">Back To league Table</a></h2>
