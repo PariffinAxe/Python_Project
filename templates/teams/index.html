@@ -3,19 +3,24 @@
 {% block content %}
 
     <main>
-        This will be a list of all teams (hyperlinked) from all leagues(hyperlinked).
         <table>
-            <tr>
+            <tr> 
                 <th>Team</th>
+                <th></th>
                 <th>League</th>
+                <th></th>
                 <th>Sport</th>
             </tr>
+            {% for team in teams %}
             <tr>
-                <td><a href="/teams/team.id">Glasgow Kayak Club</a></td>
-                <td><a href="/leagues/league.id">Division 1 19/20</a></td>
-                <td>Canoe Polo</td>
-
+                <td><a href="teams/{{ team.id }}"> {{ team.name }} </a></td>
+                <td>|</td>
+                <td><a href="leagues/{{ team.league.id }}"> {{ team.league.name }} </a></td>
+                <td>|</td>
+                <td>{{ team.league.sport }}</td>
             </tr>
+            {% endfor %}
+
         </table>
         
     </main>    

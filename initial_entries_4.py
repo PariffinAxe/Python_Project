@@ -28,14 +28,17 @@ import repositories.yellow_repo as yellow_repo
 goals = goal_repo.select_all()
 for goal in goals:
     game = game_repo.select(goal.game.id)
+    player = player_repo.select(goal.player.id)
     team = team_repo.select(goal.player.team.id)
     if team.id == game.team_1.id:
         game.team_1_score += 1
     elif team.id == game.team_2.id:
         game.team_2_score += 1
+    player.goals_scored += 1
     game_repo.goal_scored(game)
+    player_repo.goal_scored(player)
 
-games = game_repo.select_all()
+games = game_repo.finished_games()
 for game in games:
     team1 = team_repo.select(game.team_1.id)
     team2 = team_repo.select(game.team_2.id)

@@ -7,16 +7,24 @@
         <table>
             <tr>
                 <th>Player</th>
+                <th></th>
                 <th>Team</th>
+                <th></th>
                 <th>League</th>
+                <th></th>
                 <th>Sport</th>
             </tr>
-            <tr>
-                <td><a href="/players/player.id">Michael Brown</a></td>
-                <td><a href="/teams/team.id">Glasgow Kayak Club</a></td>
-                <td><a href="/leagues/league.id">Division 1 19/20</a></td>
-                <td>Canoe Polo</td>
-            </tr>
+            {% for player in players %}
+                <tr>
+                    <td>{{player.name}}</td>
+                    <td>|</td>
+                    <td><a href="/teams/{{player.team.id}}">{{player.team.name}}</a></td>
+                    <td>|</td>
+                    <td><a href="/leagues/{{player.team.league.id}}">{{player.team.league.name}}</a></td>
+                    <td>|</td>
+                    <td>{{player.team.league.sport}}</td>
+                </tr>
+            {% endfor %}
         </table>
     </main>    
     

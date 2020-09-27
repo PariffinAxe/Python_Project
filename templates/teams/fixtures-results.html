@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <main>
+        <h2>Fixture List</h2>
+        <table class="fixtures">
+            <tr class="fixture_headers">
+                <th>Game Number</th>
+                <th>Team 1</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>Team 2</th>
+                <th>Round Number</th>
+                <th></th>
+            </tr>
+            {% for game in games %}
+            <tr>
+                {% if game.started %}
+                    <th><a href="/games/{{game.id}}">{{ game.game_no }}</a></th>
+                {% else %}
+                    <th>{{ game.game_no }}</th>
+                {% endif %}
+
+                <th><a href="/teams/{{ game.team_1.id }}">{{ game.team_1.name }}</a></th>
+                {% if game.started %}
+                    <th>{{ game.team_1_score }}</th>
+                {% else %}
+                    <th></th>
+                {% endif %}
+                
+                <th>vs</th>
+                {% if game.started %}
+                    <th>{{ game.team_2_score }}</th>
+                {% else %}
+                    <th></th>
+                {% endif %}
+                <th><a href="/teams/{{ game.team_1.id }}">{{ game.team_2.name }}</a></th>
+                <th>{{ game.round_no }}</th>
+                {% if game.started %}
+                    {% if game.finished %}
+                        <th>RESULT</th>
+                    {% else %}
+                        <th>LIVE</th>
+                    {% endif %}
+                {% endif %}
+                
+            </tr>
+            {% endfor %}
+        </table>
+        
+        <h2><a href="/teams/{{ team.id }}">Back To Team</a></h2>
+    </main>
+{% endblock  %}

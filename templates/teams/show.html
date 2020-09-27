@@ -3,12 +3,36 @@
 {% block content %}
 
     <main>
-        this will list the players(hyperlinked) as well as some basic stats
         <table>
-            <tr></tr>
+            <tr>
+                <th>Player</th>
+                <th></th>
+                <th>Age</th>
+                <th></th>
+                <th>Number</th>
+                <th></th>
+                <th>Position</th>
+                <th></th>
+                <th>Goals Scored</th>
+            </tr>
+            {% for player in players %}
+                <tr>
+                    <td>{{ player.name }}</td>
+                    <td>|</td>
+                    <td>{{ player.age }}</td>
+                    <td>|</td>
+                    <td>{{ player.number }}</td>
+                    <td>|</td>
+                    <td>{{ player.position }}</td>
+                    <td>|</td>
+                    <th>{{ player.goals_scored }}</th>
+                </tr>
+            {% endfor %}
         </table>
-        
-        
+        <div>
+            <a href="/teams/{{team.id}}/fixtures-results"><button>Fixtures/Results</button></a>
+        </div>
+        <h2><a href="/leagues/{{ team.league.id }}">View {{ team.league.name }}</a></h2>
     </main>    
 
 {% endblock %}

@@ -2,6 +2,7 @@ from db.run_sql import run_sql
 from models.league import League
 from models.team import Team
 from models.game import Game
+from models.player import Player
 import repositories.league_type_repo as league_type_repo
 import repositories.team_repo as team_repo
 
@@ -21,7 +22,7 @@ def save(league):
 def select_all():
     leagues = []
 
-    sql = "SELECT * FROM leagues"
+    sql = "SELECT * FROM leagues ORDER BY name ASC"
     results = run_sql(sql)
 
     for result in results:
@@ -117,6 +118,16 @@ def get_current_round(league):
     print(f"this is the round number - {round_no}")
     return round_no
 
+def get_max_round(league):
+    max_round = None
+    sql = "SELECT * FROM games WHERE league_id = %s ORDER BY games.round_no DESC"
+    values = [league.id]
+    results = run_sql(sql, values)
+    for result in results:
+        max_round = result['round_no']
+        break
+    return max_round
+
 
 # get a list of all games in the currebt round
 def current_games(league, round_no):
@@ -135,3 +146,12 @@ def current_games(league, round_no):
     return games
 
 
+# find top scorer
+def top_scorer(league):
+    sql = "SELECT players.* FROM players INNER JOIN teams ON players.team_id = teams.id WHERE teams.league_id = %s ORDER BY goals_scored DESC"
+    values = [league.id]
+    result = run_sql(sql, values)[0]
+
+    team = team_repo.select(result['team_id'])
+    player = Player(team, result['name'], result['age'], result['number'], result['position'], result['goals_scored'], result['id'])
+    return player

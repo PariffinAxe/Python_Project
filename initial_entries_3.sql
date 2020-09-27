@@ -65,7 +65,7 @@ UPDATE games SET (started, finished) = (TRUE, TRUE) WHERE id = 62;
 UPDATE games SET (started, finished) = (TRUE, TRUE) WHERE id = 63;
 UPDATE games SET (started, finished) = (TRUE, TRUE) WHERE id = 64;
 UPDATE games SET (started, finished) = (TRUE, TRUE) WHERE id = 65;
-UPDATE games SET (started, finished) = (TRUE, TRUE) WHERE id = 66;
+UPDATE games SET (started, finished) = (TRUE, FALSE) WHERE id = 66;
 
 -- Initial Insert: goals for completed polo league. Most give generic players.
 INSERT INTO goals (game_id, player_id) VALUES (10, 88);

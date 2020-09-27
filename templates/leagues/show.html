@@ -29,10 +29,15 @@
             </tr>
             {% endfor %}
         </table>
-        <a href="/leagues/{{league.id}}/fixtures"><button>Fixtures</button></a>
-        <a href="/leagues/{{league.id}}/current_round"><button>Current Round</button></a>
-        <a href="/leagues/{{league.id}}/results"><button>Results</button></a>
+        <aside>
+            Current Top Scorer is {{top_scorer.name}} from {{top_scorer.team.name}} with {{top_scorer.goals_scored}} goals.
+        </aside>
 
+        <div>
+            <a href="/leagues/{{league.id}}/fixtures"><button>Fixtures</button></a>
+            <a href="/leagues/{{league.id}}/current_round"><button>Current Round</button></a>
+            <a href="/leagues/{{league.id}}/results"><button>Results</button></a>
+        </div>
     </main>    
 
 

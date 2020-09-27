@@ -14,7 +14,11 @@
             </tr>
             {% for game in games %}
             <tr>
-                <th>{{ game.game_no }}</th>
+                {% if game.started %}
+                <th><a href="/games/{{ game.id }}">{{ game.game_no }}</a></th>
+                {% else %}
+                    <th>{{ game.game_no }}</th>
+                {% endif %}
                 <th><a href="/teams/{{ game.team_1.id }}">{{ game.team_1.name }}</a></th>
                 <th>
                     {% if game.started %}
@@ -43,7 +47,21 @@
         {% if games == [] %}
             There are no more fixtures to be played
         {% endif %}
-
+        <div>
+            <a href="/leagues/{{league.id}}/fixtures"><button>Fixtures</button></a>
+            <a href="/leagues/{{league.id}}/results"><button>Results</button></a>
+            {% if round_no != 1 %}
+                {% if round_no == None %}
+                    <a href="/leagues/{{league.id}}/round/{{max_round}}"><button>Previous Round</button></a>
+                {% else %}
+                    <a href="/leagues/{{league.id}}/round/{{round_no - 1}}"><button>Previous Round</button></a>
+                {% endif %}
+            {% endif %}
+            {% if round_no != max_round %}
+            <a href="/leagues/{{league.id}}/round/{{round_no + 1}}"><button>Next Round</button></a>
+            {% endif %}
+            
+        </div>
         <h2><a href="/leagues/{{ league.id }}">Back To league Table</a></h2>
     </main>
 {% endblock %}

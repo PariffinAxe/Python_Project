@@ -70,6 +70,7 @@ CREATE TABLE players (
     age INT,
     position VARCHAR(255),
     number INT,
+    goals_scored INT,
     team_id INT REFERENCES teams(id)
 );
 

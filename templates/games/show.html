@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <main>
+        <h1><a href="/leagues/{{game.league.id}}/results">{{game.league.name}}</a></h1>
+        <h2>{{ game.team_1_score }} - <a href="/teams/{{game.team_1.id}}/fixtures-results">{{ game.team_1.name }}</a></h2>
+        {% for goal in team_1_goals %}
+            {{goal.player.name}}, 
+        {% endfor %}    
+        <h3>vs</h3>
+        <h2>{{ game.team_2_score }} - <a href="/teams/{{game.team_2.id}}/fixtures-results">{{ game.team_2.name }}</a></h2>
+        {% for goal in team_2_goals %}
+            {{goal.player.name}}, 
+        {% endfor %}
+    </main>
+{% endblock %}

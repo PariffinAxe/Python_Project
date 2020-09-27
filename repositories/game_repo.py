@@ -1,8 +1,10 @@
 from db.run_sql import run_sql
 from models.game import Game
 from models.team import Team
+from models.goal import Goal
 import repositories.team_repo as team_repo
 import repositories.league_repo as league_repo
+import repositories.player_repo as player_repo
 
 
 # save an instance
@@ -99,13 +101,61 @@ def goal_scored(game):
 
 # Start a game
 def start_game(game):
-    sql = "UPDATE games SET (started) = (%s) WHERE id = %s"
-    values = [game.started, game.id]
+    sql = "UPDATE games SET started = TRUE WHERE id = %s"
+    values = [game.id]
     run_sql(sql, values)
 
 
 # Finish a game
 def end_game(game):
-    sql = "UPDATE games SET (finished) = (%s) WHERE id = %s"
-    values = [game.finished, game.id]
+    sql = "UPDATE games SET finished = TRUE WHERE id = %s"
+    values = [game.id]
     run_sql(sql, values)
+
+
+# select all instances within table that are finished
+def finished_games():
+    games = []
+
+    sql = "SELECT * FROM games WHERE finished = TRUE"
+    results = run_sql(sql)
+
+    for result in results:
+        team_1 = team_repo.select(result['team_1_id'])
+        team_2 = team_repo.select(result['team_2_id'])
+        league = league_repo.select(result['league_id'])
+        game = Game(team_1, team_2, league, result['round_no'], result['game_no'], result['team_1_score'], result['team_2_score'], result['started'], result['finished'], result['id'])
+        games.append(game)
+    return games
+
+
+# get goals for team 1
+def team_1_goals(game):
+    goals = []
+
+    sql = "SELECT * FROM goals WHERE game_id = %s"
+    values = [game.id]
+    results = run_sql(sql, values)
+
+    for result in results:
+        player = player_repo.select(result['player_id'])
+        if player.team.id == game.team_1.id:
+            goal = Goal(player, game, result['id'])
+            goals.append(goal)
+    return goals
+
+
+# get goals for team 2
+def team_2_goals(game):
+    goals = []
+
+    sql = "SELECT * FROM goals WHERE game_id = %s"
+    values = [game.id]
+    results = run_sql(sql, values)
+
+    for result in results:
+        player = player_repo.select(result['player_id'])
+        if player.team.id == game.team_2.id:
+            goal = Goal(player, game, result['id'])
+            goals.append(goal)
+    return goals

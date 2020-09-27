@@ -17,7 +17,7 @@
                 <th><a href="/teams/{{ game.team_1.id }}">{{ game.team_1.name }}</a></th>
                 <th>vs</th>
                 <th><a href="/teams/{{ game.team_1.id }}">{{ game.team_2.name }}</a></th>
-                <th>{{ game.round_no }}</th>
+                <th><a href="/leagues/{{league.id}}/round/{{game.round_no}}">{{ game.round_no }}</a></th>
             </tr>
             {% endfor %}
         </table>
@@ -25,7 +25,10 @@
         {% if games == [] %}
             There are no more fixtures to be played
         {% endif %}
-
+        <div>
+            <a href="/leagues/{{league.id}}/current_round"><button>Current Round</button></a>
+            <a href="/leagues/{{league.id}}/results"><button>Results</button></a>
+        </div>
         <h2><a href="/leagues/{{ league.id }}">Back To league Table</a></h2>
     </main>
 {% endblock %}
