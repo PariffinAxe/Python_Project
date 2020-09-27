@@ -1,6 +1,10 @@
 from db.run_sql import run_sql
 from models.league import League
+from models.team import Team
+from models.game import Game
 import repositories.league_type_repo as league_type_repo
+import repositories.team_repo as team_repo
+
 
 
 # save an instance
@@ -51,5 +55,37 @@ def delete(id):
     sql = "DELETE FROM leagues WHERE id = %s"
     values = [id]
     run_sql(sql, values)
+
+# get all teams within league
+def teams(league):
+    teams = []
+
+    sql = "SELECT * FROM teams WHERE league_id = %s ORDER BY teams.points DESC, teams.goal_difference DESC, teams.goals_for DESC, teams.name ASC"
+    values = [league.id]
+    results = run_sql(sql, values)
+
+    for result in results:
+        team = Team(league, result['name'], result['games_played'], result['wins'], result['draws'], result['losses'], result['goals_for'], result['goals_against'], result['goal_difference'], result['points'], result['id'])
+        teams.append(team)
+    return teams
+
+# get all remaining/live fixtures within a league
+def games(league):
+    games = []
+
+    sql = "SELECT * FROM games WHERE league_id = %s AND games.started = FALSE ORDER BY games.game_no ASC"
+    values = [league.id]
+    results = run_sql(sql, values)
+
+    for result in results:
+        team_1 = team_repo.select(result['team_1_id'])
+        team_2 = team_repo.select(result['team_2_id'])
+        game = Game(team_1, team_2, league, result['round_no'], result['game_no'], result['started'], result['finished'], result['id'])
+        games.append(game)
+
+    return games
+
+# def get_current_round(league):
+#     sql = "SELECT * FROM games WHERE league_id = %s AND games.started = FALSE ORDER BY games.game_no ASC"
 
 

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <main>
+        <h2>Fixture List</h2>
+        <table class="fixtures">
+            <tr class="fixture_headers">
+                <th>Game Number</th>
+                <th>Team 1</th>
+                <th></th>
+                <th>Team 2</th>
+                <th>Round Number</th>
+            </tr>
+            {% for game in games %}
+            <tr>
+                <th>{{ game.game_no }}</th>
+                <th><a href="/teams/{{ game.team_1.id }}">{{ game.team_1.name }}</a></th>
+                <th>vs</th>
+                <th><a href="/teams/{{ game.team_1.id }}">{{ game.team_2.name }}</a></th>
+                <th>{{ game.round_no }}</th>
+            </tr>
+            {% endfor %}
+        </table>
+
+        {% if games == [] %}
+            There are no more fixtures to be played
+        {% endif %}
+
+        <h2><a href="/leagues/{{ league.id }}">Back To league Table</a></h2>
+    </main>
+{% endblock %}

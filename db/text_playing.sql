@@ -10,6 +10,8 @@
 -- INNER JOIN leagues ON leagues.id = teams.league_id
 -- WHERE leagues.name = 'Fives Mini League';
 
-SELECT games.round_no, teams.name FROM games
-INNER JOIN teams ON games.team_1_id = teams.id
-INNER JOIN leagues ON leagues.id = teams.league_id;
+-- SELECT * FROM teams
+-- WHERE league_id = 3
+-- ORDER BY teams.points DESC, teams.goal_difference DESC, teams.goals_for DESC, teams.name ASC;
+
+SELECT * FROM games WHERE league_id = 3 AND games.started = FALSE AND games.finished = FALSE ORDER BY games.game_no ASC;

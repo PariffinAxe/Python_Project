@@ -53,6 +53,14 @@ CREATE TABLE leagues (
 CREATE TABLE teams (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255),
+    games_played INT,
+    wins INT,
+    draws INT,
+    losses INT,
+    goals_for INT,
+    goals_against INT,
+    goal_difference INT,
+    points INT,
     league_id INT REFERENCES leagues(id)
 );
 
@@ -70,7 +78,10 @@ CREATE TABLE games (
     team_1_id INT REFERENCES teams(id),
     team_2_id INT REFERENCES teams(id),
     league_id INT REFERENCES leagues(id),
-    round_no VARCHAR(255)
+    round_no INT,
+    game_no INT,
+    started BOOLEAN,
+    finished BOOLEAN
 );
 
 CREATE TABLE goals (

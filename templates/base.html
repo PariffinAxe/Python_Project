@@ -3,15 +3,19 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{{ title }} - League Organiser</title>
+        <title>{{ title }}</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/tables.css') }}">
     </head>
     <body>
         <header>
-            <h1>League Organiser</h1>
+            <h1>{{ title }}</h1>
             <nav>
                 <ls>
                     <a href="/"><button>Homepage</button></a>
+                </ls>
+                <ls>
+                    <a href="/create_league"><button>Create A New League</button></a>
                 </ls>
             </nav>
         </header>

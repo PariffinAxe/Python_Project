@@ -299,22 +299,22 @@ INSERT INTO leagues (sport, name, league_type_id) VALUES ('Rugby', 'Local 7''s l
 INSERT INTO leagues (sport, name, league_type_id) VALUES ('Canoe Polo', 'Scottish Div 1 19/20' ,'8-DRR-5-4-6-6-8-8');
 
 -- Initial inserts: teams for all 3 leagues.
-INSERT INTO teams (name, league_id) VALUES ('Bayer Neverloosen', 1);
-INSERT INTO teams (name, league_id) VALUES ('When Harry Met Alli', 1);
-INSERT INTO teams (name, league_id) VALUES ('Let''s Talk About Cech, Baby', 1);
-INSERT INTO teams (name, league_id) VALUES ('This Could Get Messi', 1);
-INSERT INTO teams (name, league_id) VALUES ('Sexton The Beach', 2);
-INSERT INTO teams (name, league_id) VALUES ('The Try Babies', 2);
-INSERT INTO teams (name, league_id) VALUES ('50 Shades Of Jonny Gray', 2);
-INSERT INTO teams (name, league_id) VALUES ('Hawaii Try-O', 2);
-INSERT INTO teams (name, league_id) VALUES ('Glasgow Kayak Club', 3);
-INSERT INTO teams (name, league_id) VALUES ('Nomads', 3);
-INSERT INTO teams (name, league_id) VALUES ('Scotia', 3);
-INSERT INTO teams (name, league_id) VALUES ('Woodmill', 3);
-INSERT INTO teams (name, league_id) VALUES ('Granite City', 3);
-INSERT INTO teams (name, league_id) VALUES ('Black Cats', 3);
-INSERT INTO teams (name, league_id) VALUES ('Dundee Red Helmets', 3);
-INSERT INTO teams (name, league_id) VALUES ('Titans', 3);
+INSERT INTO teams (name, league_id, games_played, wins, draws, losses, goals_for, goals_against, goal_difference, points) VALUES ('Bayer Neverloosen', 1, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO teams (name, league_id, games_played, wins, draws, losses, goals_for, goals_against, goal_difference, points) VALUES ('When Harry Met Alli', 1, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO teams (name, league_id, games_played, wins, draws, losses, goals_for, goals_against, goal_difference, points) VALUES ('Let''s Talk About Cech, Baby', 1, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO teams (name, league_id, games_played, wins, draws, losses, goals_for, goals_against, goal_difference, points) VALUES ('This Could Get Messi', 1, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO teams (name, league_id, games_played, wins, draws, losses, goals_for, goals_against, goal_difference, points) VALUES ('Sexton The Beach', 2, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO teams (name, league_id, games_played, wins, draws, losses, goals_for, goals_against, goal_difference, points) VALUES ('The Try Babies', 2, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO teams (name, league_id, games_played, wins, draws, losses, goals_for, goals_against, goal_difference, points) VALUES ('50 Shades Of Jonny Gray', 2, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO teams (name, league_id, games_played, wins, draws, losses, goals_for, goals_against, goal_difference, points) VALUES ('Hawaii Try-O', 2, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO teams (name, league_id, games_played, wins, draws, losses, goals_for, goals_against, goal_difference, points) VALUES ('Glasgow Kayak Club', 3, 12, 7, 1, 4, 44, 37, 7, 22);
+INSERT INTO teams (name, league_id, games_played, wins, draws, losses, goals_for, goals_against, goal_difference, points) VALUES ('Nomads', 3, 12, 0, 1, 11, 16, 74, -58, 1);
+INSERT INTO teams (name, league_id, games_played, wins, draws, losses, goals_for, goals_against, goal_difference, points) VALUES ('Scotia', 3, 12, 9, 1, 2, 56, 26, 30, 28);
+INSERT INTO teams (name, league_id, games_played, wins, draws, losses, goals_for, goals_against, goal_difference, points) VALUES ('Woodmill', 3, 12, 5, 1, 6, 28, 29, -1, 16);
+INSERT INTO teams (name, league_id, games_played, wins, draws, losses, goals_for, goals_against, goal_difference, points) VALUES ('Granite City', 3, 12, 3, 1, 8, 28, 42, -14, 10);
+INSERT INTO teams (name, league_id, games_played, wins, draws, losses, goals_for, goals_against, goal_difference, points) VALUES ('Black Cats', 3, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO teams (name, league_id, games_played, wins, draws, losses, goals_for, goals_against, goal_difference, points) VALUES ('Dundee Red Helmets', 3, 12, 3, 1, 8, 31, 56, -25, 10);
+INSERT INTO teams (name, league_id, games_played, wins, draws, losses, goals_for, goals_against, goal_difference, points) VALUES ('Titans', 3, 12, 12, 0, 0, 74, 13, 61, 36);
 
 -- Initial inserts: players for every team. Generic names for most.
 INSERT INTO players (name, age, position, team_id) VALUES ('Mikey B', 24, 'Goalkeeper', 1);

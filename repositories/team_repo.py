@@ -5,8 +5,8 @@ import repositories.league_repo as league_repo
 
 # save an instance
 def save(team):
-    sql = "INSERT INTO teams(league_id, name) VALUES (%s, %s) RETURNING id"
-    values = [team.league.id, team.name]
+    sql = "INSERT INTO teams(league_id, name, games_played, wins, draws, goals_for, goals_against) VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING id"
+    values = [team.league.id, team.name, team.games_played, team.wins, team.draws, team.goals_for, team.goals_against]
     results = run_sql(sql, values)
 
     team.id = results[0]['id']
@@ -22,7 +22,7 @@ def select_all():
 
     for result in results:
         league = league_repo.select(result['league_id'])
-        team = Team(league, result['name'], result['id'])
+        team = Team(league, result['name'], result['games_played'], result['wins'], result['draws'], result['goals_for'], result['goals_against'], result['id'])
         teams.append(team)
     return teams
 
@@ -36,7 +36,7 @@ def select(id):
 
     if result is not None:
         league = league_repo.select(result['league_id'])
-        team = Team(league, result['name'], result['id'])
+        team = Team(league, result['name'], result['games_played'], result['wins'], result['draws'], result['goals_for'], result['goals_against'], result['id'])
     return team
 
 

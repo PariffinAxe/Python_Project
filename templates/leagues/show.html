@@ -4,24 +4,35 @@
 
     <main>
         This will show a table. In the side bar will be some further links. Within the table the teams will be clickable links. below the table will be a link to fixtures/results
-        <table>
-            <tr>
-                <th>Team</th>
-                <th>MP</th>
-                <th>W</th>
-                <th>D</th>
-                <th>L</th>
-                <th>GF</th>
-                <th>GA</th>
-                <th>GD</th>
-                <th>Pts</th>
+        <table class="league_table">
+            <tr class="table_headers">
+                <th class="team_column">Team</th>
+                <th class="main_column">MP</th>
+                <th class="side_column">W</th>
+                <th class="side_column">D</th>
+                <th class="side_column">L</th>
+                <th class="side_column">GF</th>
+                <th class="side_column">GA</th>
+                <th class="main_column">GD</th>
+                <th class="main_column">Pts</th>
             </tr>
+            {% for team in teams %}
             <tr>
-                <th><a href="/teams/team.id">Glasgow Kayak Club</a></th>
+                <th class="team_column"><a href="/teams/{{ team.id }}">{{ team.name }}</a></th>
+                <th class="main_column">{{ team.games_played }}</th>
+                <th>{{ team.wins }}</th>
+                <th>{{ team.draws }}</th>
+                <th>{{ team.losses }}</th>
+                <th>{{ team.goals_for }}</th>
+                <th>{{ team.goals_against }}</th>
+                <th class="main_column">{{ team.goal_difference }}</th>
+                <th class="main_column">{{ team.points }}</th>
             </tr>
+            {% endfor %}
         </table>
-        <a href="/leagues/league.id/fixtures"><button>Fixtures</button></a>
-        <a href="/leagues/league.id/results"><button>Results</button></a>
+        <a href="/leagues/{{league.id}}/fixtures"><button>Fixtures</button></a>
+        <a href="/leagues/{{league.id}}/current_round"><button>Current Round</button></a>
+        <a href="/leagues/{{league.id}}/results"><button>Results</button></a>
 
     </main>    
 

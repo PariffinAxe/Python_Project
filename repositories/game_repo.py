@@ -7,8 +7,8 @@ import repositories.league_repo as league_repo
 
 # save an instance
 def save(game):
-    sql = "INSERT INTO games(team_1_id, team_2_id, league_id, round_no) VALUES (%s, %s, %s, %s) RETURNING id"
-    values = [game.team_1.id, game.team_2.id, game.league.id, game.round_no]
+    sql = "INSERT INTO games(team_1_id, team_2_id, league_id, round_no, game_no, started, finished) VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING id"
+    values = [game.team_1.id, game.team_2.id, game.league.id, game.round_no, game.game_no, game.started, game.finished]
     results = run_sql(sql, values)
     game.id = results[0]['id']
     return game
@@ -24,8 +24,8 @@ def select_all():
     for result in results:
         team_1 = team_repo.select(result['team_1_id'])
         team_2 = team_repo.select(result['team_2_id'])
-        league = league_repo.select(results['league_id'])
-        game = Game(team_1, team_2, league, result['round_no'], result['id'])
+        league = league_repo.select(result['league_id'])
+        game = Game(team_1, team_2, league, result['round_no'], result['game_no'], result['started'], result['finished'], result['id'])
         games.append(game)
     return games
 
@@ -41,7 +41,7 @@ def select(id):
         team_1 = team_repo.select(result['team_1_id'])
         team_2 = team_repo.select(result['team_2_id'])
         league = league_repo.select(result['league_id'])
-        game = Game(team_1, team_2, league, result['round_no'], result['id'])
+        game = Game(team_1, team_2, league, result['round_no'], result['game_no'], result['started'], result['finished'], result['id'])
     return game
 
 
@@ -55,7 +55,7 @@ def delete_all():
 def delete(id):
     sql = "DELETE FROM games WHERE id = %s"
     values = [id]
-    run_sql(sql, values) 
+    run_sql(sql, values)
 
 
 # generate fixture list for specific league
@@ -65,9 +65,11 @@ def generate_fixture_list(league):
     values = [league.name]
     results = run_sql(sql, values)
 
+    game_no = 1
     for result in results:
-        game = Game(result['team_1'], result['team_2'], league, result['round_no'])
+        game = Game(result['team_1'], result['team_2'], league, result['round_no'], game_no)
         fixtures.append(game)
+        game_no += 1
 
 
     teams = []
@@ -75,14 +77,14 @@ def generate_fixture_list(league):
     values = [league.name]
     results = run_sql(sql, values)
     for result in results:
-        team = Team(league, result['name'], result['id'])
+        team = Team(league, result['name'], result['games_played'], result['wins'], result['draws'], result['losses'], result['goals_for'], result['goals_against'], result['goal_difference'], result['points'], result['id'])
         teams.append(team)
 
     games = []
     for fixture in fixtures:
         team_1 = fixture.team_1
         team_2 = fixture.team_2
-        game = Game(teams[team_1-1], teams[team_2-1], league, fixture.round_no)
+        game = Game(teams[team_1-1], teams[team_2-1], league, fixture.round_no, fixture.game_no)
         games.append(game)
 
     return games

@@ -1,0 +1,28 @@
+a {
+    color: violet;
+}
+
+.league_table {
+    border: 5px solid black;
+    border-collapse: collapse;
+}
+
+
+.team_column {
+    width: 200px;
+}
+.table_headers {
+    border-bottom: 2px solid black;
+}
+.points_column {
+    border-left: 1px solid black;
+    width: 100px;
+}
+.side_column {
+    width: 30px;
+}
+.main_column {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    width: 60px;
+}

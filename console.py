@@ -28,9 +28,11 @@ import repositories.yellow_repo as yellow_repo
 
 league = league_repo.select(1)
 
-games = game_repo.generate_fixture_list(league)
-for game in games:
-    game_repo.save(game)
+# games = game_repo.generate_fixture_list(league)
+# for game in games:
+#     game_repo.save(game)
+
+
 
 
 
