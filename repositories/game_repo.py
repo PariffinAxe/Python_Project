@@ -2,6 +2,7 @@ from db.run_sql import run_sql
 from models.game import Game
 from models.team import Team
 from models.goal import Goal
+from models.player import Player
 import repositories.team_repo as team_repo
 import repositories.league_repo as league_repo
 import repositories.player_repo as player_repo
@@ -160,3 +161,19 @@ def team_2_goals(game):
             goal = Goal(player, game, result['id'])
             goals.append(goal)
     return goals
+
+
+# get players in a game
+def players(game):
+    players = []
+
+    sql = "SELECT players.* FROM players INNER JOIN teams ON teams.id = players.team_id INNER JOIN games ON games.team_1_id = teams.id OR games.team_2_id = teams.id WHERE games.id= %s ORDER BY teams.id ASC, players.name ASC"
+    values = [game.id]
+    results = run_sql(sql, values)
+
+    for result in results:
+        team = team_repo.select(result['team_id'])
+        player = Player(team, result['name'], result['age'], result['number'], result['position'], result['goals_scored'], result['id'])
+        players.append(player)
+    
+    return players

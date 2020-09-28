@@ -2,7 +2,7 @@
 
 {% block content %}
     <main>
-        <h4>Start games, add goals, and finish games. Once a game is finished it can no longer be updated</h4>
+        <h4>Start games, add goals, and finish games. Once a game is finished it can no longer be updated. Click on a game for a more detailed scorecard</h4>
         <table class="fixtures">
             <tr class="fixture_headers">
                 <th></th>
@@ -15,7 +15,7 @@
                 <th></th>
                 <th class="forced_gap"></th>
                 <th>New Goalscorer</th>
-                <th></th>
+                <th class="forced_gap"></th>
                 <th></th>
             </tr>
             {% for game in games %}
@@ -26,7 +26,7 @@
                     {% endif %}
                 </th>
                 {% if game.started %}
-                    <th><a href="/games/{{ game.id }}">{{ game.game_no }}</a></th>
+                    <th><a href="/edit/games/{{ game.id }}">{{ game.game_no }}</a></th>
                 {% else %}
                     <th>{{ game.game_no }}</th>
                 {% endif %}
@@ -68,11 +68,15 @@
                         <button type="submit">Add Goal</button>   
                     </form>
                 </th>
+                <th></th>
                 <th>
                     <a href="/edit/leagues/{{league.id}}/finish-game/{{game.id}}"><button>Finish Game</button></a>
                 </th>
             </tr>
             {% endfor %}
         </table>
+        {% if games == [] %}
+            There are no more games left to play.
+        {% endif %}
     </main>
 {% endblock %}

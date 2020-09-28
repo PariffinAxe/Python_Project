@@ -2,15 +2,49 @@
 
 {% block content %}
     <main>
-        <h1><a href="/leagues/{{game.league.id}}/results">{{game.league.name}}</a></h1>
-        <h2>{{ game.team_1_score }} - <a href="/teams/{{game.team_1.id}}/fixtures-results">{{ game.team_1.name }}</a></h2>
-        {% for goal in team_1_goals %}
-            {{goal.player.name}}, 
-        {% endfor %}    
-        <h3>vs</h3>
-        <h2>{{ game.team_2_score }} - <a href="/teams/{{game.team_2.id}}/fixtures-results">{{ game.team_2.name }}</a></h2>
-        {% for goal in team_2_goals %}
-            {{goal.player.name}}, 
-        {% endfor %}
+            {% if editing %}
+                <h1><a href="/edit/games/league/{{game.league.id}}">{{game.league.name}}</a></h1>
+            {% else %}
+                <h1><a href="/leagues/{{game.league.id}}/results">{{game.league.name}}</a></h1>
+            {% endif %}
+            <h2>{{ game.team_1_score }} - 
+                {% if editing %}
+                    {{ game.team_1.name }}
+                {% else %}
+                    <a href="/teams/{{game.team_1.id}}/fixtures-results">{{ game.team_1.name }}</a>
+                {% endif %}
+            </h2>
+            {% for goal in team_1_goals %}
+                {{goal.player.name}}, 
+            {% endfor %} 
+            <h3>vs</h3>
+            <h2>{{ game.team_2_score }} - 
+                {% if editing %}
+                    {{ game.team_2.name }}
+                {% else %}
+                    <a href="/teams/{{game.team_2.id}}/fixtures-results">{{ game.team_2.name }}</a>
+                {% endif %}
+            </h2>
+            {% for goal in team_2_goals %}
+                {{goal.player.name}}, 
+            {% endfor %}
+
+            {% if editing %}
+            <form class="individual_game" action="/edit/leagues/{{game.league.id}}/new-goal/{{game.id}}/individual-game" method="post">
+                <select class="bigger_button" name="player_id" id="player">
+                    {% for player in players %}
+                        {% if player.team.id == game.team_1.id %}
+                            <option class="bigger_button" value="{{player.id}}">{{player.team.name}} - {{player.name}}</option>
+                        {% endif %}
+                        {% if player.team.id == game.team_2.id  %}
+                            <option class="bigger_button" value="{{player.id}}">{{player.team.name}} - {{player.name}}</option>
+                        {% endif %}
+                    {% endfor %}                         
+                </select>
+                <button class="bigger_button" type="submit">Add Goal</button>   
+            </form>
+            <a href="/edit/leagues/{{game.league.id}}/finish-game/{{game.id}}"><button class="bigger_button">Finish Game</button></a>
+            {% endif %}
+
     </main>
 {% endblock %}

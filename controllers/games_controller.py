@@ -1,5 +1,7 @@
 from flask import Blueprint, Flask, redirect, render_template, request
 from models.game import Game
+from models.goal import Goal
+import repositories.goal_repo as goal_repo
 import repositories.game_repo as game_repo
 import repositories.league_repo as league_repo
 import repositories.player_repo as player_repo
@@ -71,7 +73,7 @@ def end_game(league_id, game_id):
     team2.points = 3*team2.wins + team2.draws
     
     team_repo.play_game(team1, team2)
-    
+
     return redirect(f"/edit/games/league/{league_id}")
 
 
@@ -81,6 +83,8 @@ def new_goal(league_id, game_id):
     game = game_repo.select(game_id)
     player_id = request.form['player_id']
     player = player_repo.select(player_id)
+    goal = Goal(player, game)
+    goal_repo.save(goal)
     if player.team.id == game.team_1.id:
         game.team_1_score += 1
     else:
@@ -88,8 +92,37 @@ def new_goal(league_id, game_id):
     player.goals_scored += 1
     game_repo.goal_scored(game)
     player_repo.goal_scored(player)
+
     if game.started:
         return redirect(f"/edit/games/league/{league_id}")
     else:
         return redirect(f"/edit/leagues/{league_id}/start-game/{game_id}")
 
+
+# Update individual games
+@games_blueprint.route("/edit/games/<id>")
+def update_individual_game(id):
+    game = game_repo.select(id)
+    players = game_repo.players(game)
+    team_1_goals = game_repo.team_1_goals(game)
+    team_2_goals = game_repo.team_2_goals(game)
+    return render_template("games/show.html", title = "SCORECARD - EDITING", game = game, team_1_goals = team_1_goals, team_2_goals = team_2_goals, players=players, editing=True)
+
+
+# Add a goal to indivdual game
+@games_blueprint.route("/edit/leagues/<league_id>/new-goal/<game_id>/individual-game", methods=['POST'])
+def new_goal_individual(league_id, game_id):
+    game = game_repo.select(game_id)
+    player_id = request.form['player_id']
+    player = player_repo.select(player_id)
+    goal = Goal(player, game)
+    goal_repo.save(goal)
+    if player.team.id == game.team_1.id:
+        game.team_1_score += 1
+    else:
+        game.team_2_score += 1
+    player.goals_scored += 1
+    game_repo.goal_scored(game)
+    player_repo.goal_scored(player)
+
+    return redirect(f"/edit/games/{game_id}")

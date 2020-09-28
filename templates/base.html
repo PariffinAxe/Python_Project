@@ -6,6 +6,13 @@
         <title>{{ title }}</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/tables.css') }}">
+        {% if editing %}
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/editing.css') }}">
+        {% endif %}
+        {% if creating %}
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/creating.css') }}">
+        {% endif %}
+
     </head>
     <body>
         <header>

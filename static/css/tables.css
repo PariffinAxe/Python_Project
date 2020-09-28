@@ -34,3 +34,15 @@ a {
 #player {
     width: 200px;
 }
+
+.individual_game {
+    margin: 100px 0;
+    
+}
+
+.bigger_button {
+    font-size: 24px;
+    border-radius: 12px;
+    width: 500px;
+}
+
