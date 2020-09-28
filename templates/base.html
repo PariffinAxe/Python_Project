@@ -25,15 +25,30 @@
             {% endblock %}
             <aside>
                 <ul>
-                    <li>
-                        <a href="/leagues"><button>View Leagues</button></a>
-                    </li>
-                    <li>
-                        <a href="/teams"><button>View All Teams</button></a>
-                    </li>
-                    <li>
-                        <a href="/players"><button>View All Players</button></a>
-                    </li>
+                    {% if editing %}
+                        <li>
+                            <a href="/edit/create-new"><button>Create League</button></a>
+                        </li>
+                        <li>
+                            <a href="/edit/teams"><button>Remove Team</button></a>
+                        </li>
+                        <li>
+                            <a href="/edit/players"><button>Add Players</button></a>
+                        </li>
+                        <li>
+                            <a href="/edit/games"><button>Update Games</button></a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="/leagues"><button>View Leagues</button></a>
+                        </li>
+                        <li>
+                            <a href="/teams"><button>View All Teams</button></a>
+                        </li>
+                        <li>
+                            <a href="/players"><button>View All Players</button></a>
+                        </li>
+                    {% endif %}
                 </ul>
             </aside>
         </main>

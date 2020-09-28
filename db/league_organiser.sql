@@ -71,13 +71,13 @@ CREATE TABLE players (
     position VARCHAR(255),
     number INT,
     goals_scored INT,
-    team_id INT REFERENCES teams(id)
+    team_id INT REFERENCES teams(id) ON DELETE CASCADE
 );
 
 CREATE TABLE games (
     id SERIAL PRIMARY KEY,
-    team_1_id INT REFERENCES teams(id),
-    team_2_id INT REFERENCES teams(id),
+    team_1_id INT REFERENCES teams(id) ON DELETE CASCADE,
+    team_2_id INT REFERENCES teams(id) ON DELETE CASCADE,
     league_id INT REFERENCES leagues(id),
     round_no INT,
     game_no INT,

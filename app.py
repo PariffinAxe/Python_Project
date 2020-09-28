@@ -12,9 +12,16 @@ app.register_blueprint(teams_blueprint)
 app.register_blueprint(players_blueprint)
 app.register_blueprint(games_blueprint)
 
+# Homepage
 @app.route('/')
 def home():
     return render_template('index.html', title="League Organiser")
+
+# Homepage for editing
+@app.route("/edit")
+def edits():
+    return render_template("edit_index.html", title = "League Editor", editing = True)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

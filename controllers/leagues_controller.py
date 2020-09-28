@@ -59,3 +59,4 @@ def league_fixtures_by_round(id, round_no):
     else:
         games = []
     return render_template("leagues/current_round.html", title = league.sport+" - "+league.name, league = league, teams = teams, games = games, round_no = current_round, max_round = max_round)
+
