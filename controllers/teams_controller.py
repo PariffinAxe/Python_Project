@@ -34,7 +34,7 @@ def show_teams_to_remove():
 
 
 # Remove a team from the database/league
-@teams_blueprint.route("/edit/teams", methods=["POST"])
+@teams_blueprint.route("/edit/teams", methods=['POST'])
 def remove_team_confirmation():
     id = request.form['team_id']
     team_repo.delete(id)

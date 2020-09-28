@@ -174,3 +174,19 @@ def unfinished_gemas(league):
         games.append(game)
     
     return games
+
+
+# get players in league
+def players(league):
+    players = []
+
+    sql = "SELECT players.* FROM players INNER JOIN teams ON teams.id = players.team_id WHERE league_id = %s ORDER BY teams.id ASC, players.name ASC"
+    values = [league.id]
+    results = run_sql(sql, values)
+
+    for result in results:
+        team = team_repo.select(result['team_id'])
+        player = Player(team, result['name'], result['age'], result['number'], result['position'], result['goals_scored'], result['id'])
+        players.append(player)
+    
+    return players

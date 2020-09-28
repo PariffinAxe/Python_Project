@@ -22,13 +22,11 @@
             <tr>
                 <th>
                     {% if game.started == False %}
-                        <form action="/edit/leagues/{{league.id}}/start-game/{{game.id}}" methods="post">
-                            <button>Start Game</button>
-                        </form>
+                        <a href="/edit/leagues/{{league.id}}/start-game/{{game.id}}"><button>Start Game</button></a>
                     {% endif %}
                 </th>
                 {% if game.started %}
-                <th><a href="/games/{{ game.id }}">{{ game.game_no }}</a></th>
+                    <th><a href="/games/{{ game.id }}">{{ game.game_no }}</a></th>
                 {% else %}
                     <th>{{ game.game_no }}</th>
                 {% endif %}
@@ -53,6 +51,25 @@
                             Live
                         {% endif %}
                     {% endif %}
+                </th>
+                <th></th>
+                <th>
+                    <form action="/edit/leagues/{{league.id}}/new-goal/{{game.id}}" method="post">
+                        <select name="player_id" id="player">
+                            {% for player in players %}
+                                {% if player.team.id == game.team_1.id %}
+                                    <option value="{{player.id}}">{{player.team.name}} - {{player.name}}</option>
+                                {% endif %}
+                                {% if player.team.id == game.team_2.id  %}
+                                    <option value="{{player.id}}">{{player.team.name}} - {{player.name}}</option>
+                                {% endif %}
+                            {% endfor %}                         
+                        </select>
+                        <button type="submit">Add Goal</button>   
+                    </form>
+                </th>
+                <th>
+                    <a href="/edit/leagues/{{league.id}}/finish-game/{{game.id}}"><button>Finish Game</button></a>
                 </th>
             </tr>
             {% endfor %}
