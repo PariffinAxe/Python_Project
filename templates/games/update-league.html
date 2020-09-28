@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <main>
+        <h4>Start games, add goals, and finish games. Once a game is finished it can no longer be updated</h4>
+        <table class="fixtures">
+            <tr class="fixture_headers">
+                <th></th>
+                <th>Game Number</th>
+                <th>Team 1</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>Team 2</th>
+                <th></th>
+                <th class="forced_gap"></th>
+                <th>New Goalscorer</th>
+                <th></th>
+                <th></th>
+            </tr>
+            {% for game in games %}
+            <tr>
+                <th>
+                    {% if game.started == False %}
+                        <form action="/edit/leagues/{{league.id}}/start-game/{{game.id}}" methods="post">
+                            <button>Start Game</button>
+                        </form>
+                    {% endif %}
+                </th>
+                {% if game.started %}
+                <th><a href="/games/{{ game.id }}">{{ game.game_no }}</a></th>
+                {% else %}
+                    <th>{{ game.game_no }}</th>
+                {% endif %}
+                <th><a href="/teams/{{ game.team_1.id }}">{{ game.team_1.name }}</a></th>
+                <th>
+                    {% if game.started %}
+                    {{ game.team_1_score }}
+                    {% endif %}
+                </th>
+                <th>vs</th>
+                <th>
+                    {% if game.started %}
+                    {{ game.team_2_score }}
+                    {% endif %}
+                </th>
+                <th><a href="/teams/{{ game.team_1.id }}">{{ game.team_2.name }}</a></th>
+                <th>
+                    {% if game.started %}
+                        {% if game.finished %}
+                            Result
+                        {% else %}
+                            Live
+                        {% endif %}
+                    {% endif %}
+                </th>
+            </tr>
+            {% endfor %}
+        </table>
+    </main>
+{% endblock %}

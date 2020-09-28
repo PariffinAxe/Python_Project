@@ -118,6 +118,8 @@ def get_current_round(league):
     print(f"this is the round number - {round_no}")
     return round_no
 
+
+# find the max round number in league
 def get_max_round(league):
     max_round = None
     sql = "SELECT * FROM games WHERE league_id = %s ORDER BY games.round_no DESC"
@@ -155,3 +157,20 @@ def top_scorer(league):
     team = team_repo.select(result['team_id'])
     player = Player(team, result['name'], result['age'], result['number'], result['position'], result['goals_scored'], result['id'])
     return player
+
+
+# Find all unfinished games for league
+def unfinished_gemas(league):
+    games = []
+
+    sql = "SELECT * FROM games WHERE league_id = %s AND finished = False ORDER BY game_no ASC"
+    values = [league.id]
+    results = run_sql(sql, values)
+
+    for result in results:
+        team_1 = team_repo.select(result['team_1_id'])
+        team_2 = team_repo.select(result['team_2_id'])
+        game = Game(team_1, team_2, league, result['round_no'], result['game_no'], result['team_1_score'], result['team_2_score'], result['started'], result['finished'], result['id'])
+        games.append(game)
+    
+    return games

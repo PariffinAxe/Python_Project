@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <main>
+        <h2>Select the league you wish to update:</h2>
+        <ul>
+            {% for league in leagues %}
+                <li>
+                    <a href="/edit/games/league/{{league.id}}">{{league.name}}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </main>
+{% endblock %}

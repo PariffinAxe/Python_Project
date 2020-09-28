@@ -113,6 +113,7 @@ def end_game(game):
     run_sql(sql, values)
 
 
+
 # select all instances within table that are finished
 def finished_games():
     games = []
