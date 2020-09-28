@@ -3,6 +3,7 @@ from models.game import Game
 import repositories.game_repo as game_repo
 import repositories.league_repo as league_repo
 import repositories.player_repo as player_repo
+import repositories.team_repo as team_repo
 
 games_blueprint = Blueprint("games", __name__)
 
@@ -44,6 +45,33 @@ def start_game(league_id, game_id):
 def end_game(league_id, game_id):
     game = game_repo.select(game_id)
     game_repo.end_game(game)
+    team1 = team_repo.select(game.team_1.id)
+    team2 = team_repo.select(game.team_2.id)
+
+    if game.team_1_score > game.team_2_score:
+        team1.wins += 1
+        team2.losses += 1
+    elif game.team_1_score < game.team_2_score:
+        team1.losses += 1
+        team2.wins += 1
+    else:
+        team1.draws += 1
+        team2.draws += 1
+    
+    team1.games_played += 1
+    team1.goals_for += game.team_1_score
+    team1.goals_against += game.team_2_score
+    team1.goal_difference = team1.goals_for - team1.goals_against
+    team1.points = 3*team1.wins + team1.draws
+    
+    team2.games_played += 1
+    team2.goals_for += game.team_2_score
+    team2.goals_against += game.team_1_score
+    team2.goal_difference = team2.goals_for - team2.goals_against
+    team2.points = 3*team2.wins + team2.draws
+    
+    team_repo.play_game(team1, team2)
+    
     return redirect(f"/edit/games/league/{league_id}")
 
 
