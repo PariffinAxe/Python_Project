@@ -7,7 +7,7 @@ import repositories.league_repo as league_repo
 
 # save an instance
 def save(team):
-    sql = "INSERT INTO teams(league_id, name, games_played, wins, draws, losses, goals_for, goals_against, goal_difference, points) VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING id"
+    sql = "INSERT INTO teams(league_id, name, games_played, wins, draws, losses, goals_for, goals_against, goal_difference, points) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id"
     values = [team.league.id, team.name, team.games_played, team.wins, team.draws, team.losses, team.goals_for, team.goals_against, team.goal_difference, team.points]
     results = run_sql(sql, values)
 
@@ -52,6 +52,13 @@ def delete_all():
 def delete(id):
     sql = "DELETE FROM teams WHERE id = %s"
     values = [id]
+    run_sql(sql, values)
+
+
+# update team
+def update(team):
+    sql = "UPDATE teams SET (league_id, name, games_played, wins, draws, losses, goals_for, goals_against, goal_difference, points) = (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) WHERE id = %s"
+    values = [team.league.id, team.name, team.games_played, team.wins, team.draws, team.losses, team.goals_for, team.goals_against, team.goal_difference, team.points, team.id]
     run_sql(sql, values)
 
 

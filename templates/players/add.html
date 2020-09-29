@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <main>
+        <h2>Add a player below or use the side bar to get back to the main page</h2>
+        <form action="/edit/players" method="post">
+            <p>
+            <label for="team">Select a team:</label>
+              <select name="team_id" id="team">
+                  {% for team in teams %}
+                      <option value="{{ team.id }}">{{ team.name + "-" + team.league.sport }}</option>
+                  {% endfor %}
+              </select>
+            </p>
+            <label for="name">Add Name</label>
+            <input type="text" name="name" id="name">
+            <label for="age">Add Age</label>
+            <input type="number" name="age", id="age">
+            <label for="number">Shirt/Bib Number</label>
+            <input type="number" name="number" id="number">
+            <label for="position">Position</label>
+            <input type="text" name="position" id="position">
+            <button type="submit">Add Player</button>
+        </form>
+    </main>
+{% endblock %}

@@ -30,7 +30,7 @@ def show_team_games(id):
 @teams_blueprint.route("/edit/teams")
 def show_teams_to_remove():
     teams = team_repo.select_all()
-    return render_template("teams/edit.html", title = "Remove a Team", teams = teams, editing = True)
+    return render_template("teams/remove.html", title = "Remove a Team", teams = teams, editing = True)
 
 
 # Remove a team from the database/league
@@ -39,3 +39,19 @@ def remove_team_confirmation():
     id = request.form['team_id']
     team_repo.delete(id)
     return redirect("/edit/teams")
+
+# show teams that can be changed
+@teams_blueprint.route("/edit/teams/name")
+def show_teams_to_change():
+    teams = team_repo.select_all()
+    return render_template("teams/edit.html", title = "Remove a Team", teams = teams, editing = True)
+
+# change a team name
+@teams_blueprint.route("/edit/teams/name", methods=["POST"])
+def change_team_name():
+    id = request.form['team_id']
+    team = team_repo.select(id)
+    team.name = request.form['new_name']
+    team_repo.update(team)
+    return redirect("/edit/teams/name")
+    

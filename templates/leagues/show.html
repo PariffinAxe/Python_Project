@@ -3,6 +3,11 @@
 {% block content %}
 
     <main>
+        <h2>
+            {% if top_scorer %}
+                Current Top Scorer is {{top_scorer.name}} from {{top_scorer.team.name}} with {{top_scorer.goals_scored}} goals.
+            {% endif %}
+        </h2>
         <table class="league_table">
             <tr class="table_headers">
                 <th class="team_column">Team</th>
@@ -29,9 +34,6 @@
             </tr>
             {% endfor %}
         </table>
-        <aside>
-            Current Top Scorer is {{top_scorer.name}} from {{top_scorer.team.name}} with {{top_scorer.goals_scored}} goals.
-        </aside>
 
         <div>
             <a href="/leagues/{{league.id}}/fixtures"><button>Fixtures</button></a>

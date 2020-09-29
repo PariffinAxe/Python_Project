@@ -58,7 +58,9 @@
                 {% endif %}
             {% endif %}
             {% if round_no != max_round %}
-            <a href="/leagues/{{league.id}}/round/{{round_no + 1}}"><button>Next Round</button></a>
+                {% if round_no != none %}
+                    <a href="/leagues/{{league.id}}/round/{{round_no + 1}}"><button>Next Round</button></a>
+                {% endif %}            
             {% endif %}
             
         </div>

@@ -70,7 +70,9 @@
                 </th>
                 <th></th>
                 <th>
-                    <a href="/edit/leagues/{{league.id}}/finish-game/{{game.id}}"><button>Finish Game</button></a>
+                    {% if game.started %}
+                        <a href="/edit/leagues/{{league.id}}/finish-game/{{game.id}}"><button>Finish Game</button></a>
+                    {% endif %}
                 </th>
             </tr>
             {% endfor %}

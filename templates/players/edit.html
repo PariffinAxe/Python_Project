@@ -2,14 +2,16 @@
 
 {% block content %}
     <main>
-        <h2>Add a player below or use the side bar to get back to the main page</h2>
-        <form action="/edit/players" method="post">
-            <label for="team">Select a team:</label>
-              <select name="team_id" id="team">
-                  {% for team in teams %}
-                      <option value="{{ team.id }}">{{ team.name + "-" + team.league.sport }}</option>
+        <h2>Choose the player you want to edit in the drop down box then input his new information</h2>
+        <form action="/edit/players/change" method="post">
+            <p>
+            <label for="player_id">Select a Player:</label>
+              <select name="player_id" id="player_id">
+                  {% for player in players %}
+                      <option value="{{ player.id }}">{{ player.name + "-" + player.team.name}}</option>
                   {% endfor %}
               </select>
+            </p>
             <label for="name">Add Name</label>
             <input type="text" name="name" id="name">
             <label for="age">Add Age</label>
@@ -18,7 +20,7 @@
             <input type="number" name="number" id="number">
             <label for="position">Position(optional)</label>
             <input type="text" name="position" id="position">
-            <button type="submit">Add Player</button>
+            <button type="submit">Edit Player</button>
         </form>
     </main>
 {% endblock %}

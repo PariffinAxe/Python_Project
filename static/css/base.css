@@ -2,7 +2,7 @@ body > header {
     background-color: #107896;
     color: whitesmoke;
     font-size: 24px;
-    border-radius: 24px;
+    border-radius: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -29,12 +29,16 @@ body > footer {
 
 body > main {
     display: grid;
-    grid-template-areas: "left right";
-    grid-template-columns: 8fr 2fr;
+    grid-template-areas: "left centre right";
+    grid-template-columns: 1fr 50fr 12fr;
+}
+body > main > left {
+    background-color: #17afdb;
+    margin: 0 0 0 16px;
 }
 body > main > aside {
     background-color: #17afdb;
-    margin: 0 24px 0 0;
+    margin: 0 16px 0 0;
 }
 body > main > aside ul > li > a > button {
     width: 75%;
@@ -43,6 +47,6 @@ body > main > aside ul > li > a > button {
     margin: 10px;
 }
 body > main > main {
-    margin: 12px;
+    margin: 12px 12px 12px 24px;
 }
 

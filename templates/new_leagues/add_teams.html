@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <main>
+        <h2>Enter the team names for your league below. These can be changed later so you can input a random name if you're unsure.</h2>
+        <h4>You're currently adding team number {{team_no}}</h4>
+        <form action="/edit/league/{{league.id}}/add-teams/{{no_teams}}/add/{{team_no}}" method="post">
+            <p>
+                <label for="name">team name:</label>
+                <input type="text" name="name" id="name">
+            </p>
+            <button type="submit">Add Teams</button>
+        </form>
+    </main>
+{% endblock %}

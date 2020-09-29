@@ -1,14 +1,17 @@
 --Initial Inserts: sample possible league sizes, needs heavily expanded. Can do so from admin controls on web app.
 INSERT INTO league_types (id, no_of_teams, comp_style, total_games, no_of_rounds, teams_at_one, teams_at_two, teams_at_three, teams_at_four) 
-VALUES ('8-DRR-4', 8, 'DRR', 56, 4, 6, 6, 6, 6);
+VALUES ('8-DRR-4', 8, 'Double Round Robin', 56, 4, 6, 6, 6, 6);
 INSERT INTO league_types (id, no_of_teams, comp_style, total_games, no_of_rounds, teams_at_one, teams_at_two, teams_at_three)
-VALUES ('6-SRR-3', 6, 'SRR', 15, 3, 4, 4, 4);
+VALUES ('6-SRR-3', 6, 'Single Round Robin', 15, 3, 4, 4, 4);
 INSERT INTO league_types (id, no_of_teams, comp_style, total_games, no_of_rounds, teams_at_one, teams_at_two)
-VALUES ('10-SSRR-2', 10, 'SSRR', 20, 2, 5, 5);
+VALUES ('10-SSRR-2', 10, 'Split Single Round Robin', 20, 2, 5, 5);
 INSERT INTO league_types (id, no_of_teams, comp_style, total_games, no_of_rounds, teams_at_one, teams_at_two, teams_at_three, teams_at_four, teams_at_five)
-VALUES ('8-DRR-5-4-6-6-8-8', 8, 'DRR', 56, 5, 4, 6, 6, 8, 8);
+VALUES ('8-DRR-5-4-6-6-8-8', 8, 'Double Round Robin', 56, 5, 4, 6, 6, 8, 8);
 INSERT INTO league_types (id, no_of_teams, comp_style, total_games, no_of_rounds)
-VALUES ('4-DRR-6', 4, 'DRR', 12, 6);
+VALUES ('4-DRR-6', 4, 'Double Round Robin', 12, 6);
+INSERT INTO league_types (id, no_of_teams, comp_style, total_games, no_of_rounds)
+VALUES ('4-SRR-1', 4, 'Single Round Robin', 6, 1);
+
 
 -- Initial insert: all singular playlists for sample league sizes. 
 INSERT INTO playlists (id, round_no, no_teams, league_type_id) VALUES ('8-DRR-4-1', 1, 6, '8-DRR-4'); -- 14
@@ -31,6 +34,7 @@ INSERT INTO playlists (id, round_no, no_teams, league_type_id) VALUES ('4-DRR-6-
 INSERT INTO playlists (id, round_no, no_teams, league_type_id) VALUES ('4-DRR-6-4', 4, 4, '4-DRR-6'); -- 2
 INSERT INTO playlists (id, round_no, no_teams, league_type_id) VALUES ('4-DRR-6-5', 5, 4, '4-DRR-6'); -- 2
 INSERT INTO playlists (id, round_no, no_teams, league_type_id) VALUES ('4-DRR-6-6', 6, 4, '4-DRR-6'); -- 2
+INSERT INTO playlists (id, round_no, no_teams, league_type_id) VALUES ('4-SRR-1-1', 1, 4, '4-SRR-1'); -- 6
 
 
 -- Initial insert: all possible games with 10 players max.
@@ -292,6 +296,14 @@ INSERT INTO fixtures (playlist_id, possible_game_id) VALUES ('4-DRR-6-5', 0201);
 INSERT INTO fixtures (playlist_id, possible_game_id) VALUES ('4-DRR-6-5', 0403);
 INSERT INTO fixtures (playlist_id, possible_game_id) VALUES ('4-DRR-6-6', 0301);
 INSERT INTO fixtures (playlist_id, possible_game_id) VALUES ('4-DRR-6-6', 0402);
+
+-- Initial insert: cross matched games for 4 player SRR across 1 date.
+INSERT INTO fixtures (playlist_id, possible_game_id) VALUES ('4-SRR-1-1', 0102);
+INSERT INTO fixtures (playlist_id, possible_game_id) VALUES ('4-SRR-1-1', 0304);
+INSERT INTO fixtures (playlist_id, possible_game_id) VALUES ('4-SRR-1-1', 0401);
+INSERT INTO fixtures (playlist_id, possible_game_id) VALUES ('4-SRR-1-1', 0203);
+INSERT INTO fixtures (playlist_id, possible_game_id) VALUES ('4-SRR-1-1', 0103);
+INSERT INTO fixtures (playlist_id, possible_game_id) VALUES ('4-SRR-1-1', 0204);
 
 -- Initial inserts: 3 custom leagues, 1 will be in progress.
 INSERT INTO leagues (sport, name, league_type_id) VALUES ('Football', 'Fives Mini League','4-DRR-6');

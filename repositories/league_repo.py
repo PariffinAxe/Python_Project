@@ -115,7 +115,6 @@ def get_current_round(league):
     for result in results:
         round_no = result['round_no']
         break
-    print(f"this is the round number - {round_no}")
     return round_no
 
 
@@ -150,12 +149,15 @@ def current_games(league, round_no):
 
 # find top scorer
 def top_scorer(league):
+    player = None
     sql = "SELECT players.* FROM players INNER JOIN teams ON players.team_id = teams.id WHERE teams.league_id = %s ORDER BY goals_scored DESC"
     values = [league.id]
-    result = run_sql(sql, values)[0]
+    results = run_sql(sql, values)
 
-    team = team_repo.select(result['team_id'])
-    player = Player(team, result['name'], result['age'], result['number'], result['position'], result['goals_scored'], result['id'])
+    for result in results:
+        team = team_repo.select(result['team_id'])
+        player = Player(team, result['name'], result['age'], result['number'], result['position'], result['goals_scored'], result['id'])
+        break
     return player
 
 

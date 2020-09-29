@@ -2,6 +2,69 @@
 
 {% block content %}
     <main>
-        This is where we'll create new leagues
+        <h3>This is where we'll create new leagues. Make a choice from the drop down box and click select to confirm your choice. If there's only one choice it will be made for you. Once you've got all your selections in place click confirm league and generate fixture list.</h3>
+        {% if choose_no_teams %}
+            <form action="/edit/create-new/no-of-teams" method="post">
+                <label for="no_of_teams">Choose Number of teams:</label>
+                    <select name="no_of_teams" id="no_of_teams">
+                        {% for team_no in no_teams %}
+                            <option value="{{team_no}}">{{team_no}}</option>
+                        {% endfor %}
+                    </select>
+                <button type="submit">Select</button>
+            </form>
+        {% else %}
+            <p>
+                Number of Teams: {{no_teams}}
+            </p>
+        {% endif %}
+        <p>
+            {% if choose_comp_style %}
+                <form action="/edit/create-new/{{no_teams}}/comp-styles" method="post">
+                    <label for="comp_style">Choose Competition Style:</label>
+                        <select name="comp_style" id="comp_style">
+                            {% for comp_style in comp_styles %}
+                                <option value="{{  comp_style  }}">{{  comp_style  }}</option>
+                            {% endfor %}
+                        </select>
+                    <button type="submit">Select</button>
+                </form>
+            {% else %}
+                Competition Style: {{ comp_style }}
+            {% endif %}
+        </p>
+        <p>
+            {% if choose_no_dates %}
+                <form action="/edit/create-new/{{no_teams}}/{{comp_style}}/no-of-dates" method="post">
+                    <label for="no_dates">Choose Number of Dates:</label>
+                        <select name="no_dates" id="no_dates">
+                            {% for no_date in no_dates %}
+                                <option value="{{  no_date  }}">{{  no_date  }}</option>
+                            {% endfor %}
+                        </select>
+                    <button type="submit">Select</button>
+                </form>
+            {% else %}
+                Number of Dates: {{ no_dates }}
+            {% endif %}
+        </p>
+        <p>
+            {% if confirmation %}
+                <form action="/edit/create-new/{{no_teams}}/{{comp_style}}/{{no_dates}}/confirm" method="post">
+                    <p>
+                        <div>
+                            <label for="name">Enter League Name:</label>
+                            <input type="text" name="name" id="name">
+                        </div>
+                        <div>
+                            <label for="sport">Enter League Sport:  </label>
+                            <input type="text" name="sport" id="sport">
+                        </div>
+                    </p>
+                    <button type="submit">Create League</button>
+                </form>
+            {% endif %}  
+        </p>
+        
     </main>
 {% endblock content %}

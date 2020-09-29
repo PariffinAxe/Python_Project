@@ -27,6 +27,7 @@
             </nav>
         </header>
         <main>
+            <left></left>
             {% block content %}
                 
             {% endblock %}
@@ -40,7 +41,13 @@
                             <a href="/edit/teams"><button>Remove Team</button></a>
                         </li>
                         <li>
+                            <a href="/edit/teams/name"><button>Edit Team Name</button></a>
+                        </li>
+                        <li>
                             <a href="/edit/players"><button>Add Players</button></a>
+                        </li>
+                        <li>
+                            <a href="/edit/players/change"><button>Edit Players</button></a>
                         </li>
                         <li>
                             <a href="/edit/games/pick-league"><button>Update Games</button></a>

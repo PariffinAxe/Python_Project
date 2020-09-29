@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <main>
+        <h3>Add players below. Choose the team from the drop down box and then fill in information as needed. You can add players later if you're not sure add the moment. Or even if you just want to add some later. Once your done use the buttons to the side to exit.</h3>
+        <form action="/edit/league/{{league.id}}/add-player" method="post">
+            <label for="team">Select a team:</label>
+              <select name="team_id" id="team">
+                  {% for team in teams %}
+                      <option value="{{ team.id }}">{{ team.name + "-" + team.league.name }}</option>
+                  {% endfor %}
+              </select>
+            <label for="name">Add Name</label>
+            <input type="text" name="name" id="name">
+            <label for="age">Add Age</label>
+            <input type="number" name="age", id="age">
+            <label for="number">Shirt/Bib Number(optional)</label>
+            <input type="number" name="number" id="number">
+            <label for="position">Position(optional)</label>
+            <input type="text" name="position" id="position">
+            <button type="submit">Add Player</button>
+        </form>
+    </main>
+{% endblock %}

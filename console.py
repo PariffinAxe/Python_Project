@@ -27,9 +27,10 @@ from models.yellow import Yellow
 import repositories.yellow_repo as yellow_repo
 
 
-league = league_repo.select(3)
-top_scorer = league_repo.top_scorer(league)
-print(top_scorer.name)
+league = league_repo.select(4)
+games = game_repo.generate_fixture_list(league)
+for game in games:
+    game_repo.save(game)
 
 
 

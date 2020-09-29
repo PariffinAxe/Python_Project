@@ -16,7 +16,7 @@ def players():
 @players_blueprint.route("/edit/players")
 def add_players():
     teams = team_repo.select_all()
-    return render_template("players/edit.html", title = "Add Player", teams = teams, editing = True)
+    return render_template("players/add.html", title = "Add Player", teams = teams, editing = True)
 
 #Add instance of player
 @players_blueprint.route("/edit/players", methods=["POST"])
@@ -30,3 +30,21 @@ def add_player():
     player = Player(team, name, age, number, position)
     player_repo.save(player)
     return redirect("/edit/players")
+
+#Add players
+@players_blueprint.route("/edit/players/change")
+def show_players():
+    players = player_repo.select_all()
+    return render_template("players/edit.html", title = "Edit Player", players = players, editing = True)
+
+#Add instance of player
+@players_blueprint.route("/edit/players/change", methods=["POST"])
+def change_player():
+    player_id = request.form["player_id"]
+    player = player_repo.select(player_id)
+    player.name = request.form['name']
+    player.age = request.form['age']
+    player.number = request.form['number']
+    player.position = request.form['position']
+    player_repo.update(player)
+    return redirect("/edit/players/change")

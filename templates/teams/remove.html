@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <main>
+        <h3>Pick the team you want to remove. Make sure your certain though as theres no coming back.</h3>
+        <form action="/edit/teams" method="post">
+            <select name="team_id" id="team">
+                <option value="">Select A Team</option>
+                {% for team in teams %}
+                <option value="{{team.id}}">{{team.name}}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Delete Team</button>
+        </form>
+    </main>
+{% endblock  %}
