@@ -23,3 +23,9 @@ leagues/teams/players/games. You can also click the 'edit leagues' button to sta
 you'll notice upon click 'edit leagues' button is your screen will turn yellow, this is to signify that you are in an editing state and some things
 you do are irreversible. Clicking on 'Create League' from here will turn your background green. Make sure not to click away until you've added all 
 your teams as you cant add them later.
+
+Technologies Used:
+  Python
+  Flask
+  PostgreSQL
+  HTML/CSS
