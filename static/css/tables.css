@@ -49,3 +49,12 @@ a {
 .fixture_buttons {
     margin: 20px 0 0 0;
 }
+
+.table_button {
+    margin: 50px 0 0 0;
+}
+
+.table_button > a > button {
+    border-radius: 16px;
+    font-size: 32px;
+}
