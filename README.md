@@ -25,7 +25,11 @@ you do are irreversible. Clicking on 'Create League' from here will turn your ba
 your teams as you cant add them later.
 
 Technologies Used:
-Python
-Flask
-PostgreSQL
-HTML/CSS
+
+  Python
+
+  Flask
+  
+  PostgreSQL
+  
+  HTML/CSS
